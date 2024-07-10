@@ -19,9 +19,11 @@ public class EmployeeAccountService {
         employee.setNetSalary(netSalary);
         return repository.save(employee);
     }
+
     public EmployeeAccount saveEmployee(EmployeeAccount employee) {
         return repository.save(employee);
     }
+
     public List<EmployeeAccount> getAllEmployees() {
         return repository.findAll();
     }
