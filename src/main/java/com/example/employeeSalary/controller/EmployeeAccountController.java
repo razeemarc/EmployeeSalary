@@ -18,12 +18,8 @@ public class EmployeeAccountController {
 
     @GetMapping("/NetSalary/{empId}")
     public ResponseEntity<EmployeeAccount> calculateNetSalary(@PathVariable int empId) {
-        try {
-            EmployeeAccount employee = service.calculateAndUpdateNetSalary(empId);
-            return new ResponseEntity<>(employee, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        EmployeeAccount employee = service.calculateAndUpdateNetSalary(empId);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
     @GetMapping("/all")

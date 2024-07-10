@@ -1,6 +1,7 @@
 package com.example.employeeSalary.service;
 
 import com.example.employeeSalary.entity.EmployeeAccount;
+import com.example.employeeSalary.exception.EmployeeNotFoundException;
 import com.example.employeeSalary.repository.EmployeeAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class EmployeeAccountService {
     private EmployeeAccountRepository repository;
 
     public EmployeeAccount calculateAndUpdateNetSalary(int empId) {
-        EmployeeAccount employee = repository.findById(empId).orElseThrow(() -> new RuntimeException("Employee not found"));
+        EmployeeAccount employee = repository.findById(empId).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + empId + " not found"));
         int netSalary = employee.getBaseSalary() - (employee.getLeaveDays() * 1000);
         employee.setNetSalary(netSalary);
         return repository.save(employee);
