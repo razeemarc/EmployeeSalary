@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 @Entity
 public class EmployeeAccount {
@@ -17,4 +19,5 @@ public class EmployeeAccount {
     private int baseSalary = 30000;
     private int leaveDays;
     private Integer netSalary; // Default to null
+    private LocalDate dateOfJoin; // New attribute
 }

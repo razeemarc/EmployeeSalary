@@ -38,4 +38,11 @@ public class EmployeeAccountService {
         }
         return employees;
     }
+
+    public void deleteEmployeeById(int empId) {
+        if (!repository.existsById(empId)) {
+            throw new EmployeeNotFoundException("Employee with ID " + empId + " not found");
+        }
+        repository.deleteById(empId);
+    }
 }

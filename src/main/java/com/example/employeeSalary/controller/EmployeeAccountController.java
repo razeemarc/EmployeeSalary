@@ -1,6 +1,7 @@
 package com.example.employeeSalary.controller;
 
 import com.example.employeeSalary.entity.EmployeeAccount;
+import com.example.employeeSalary.exception.EmployeeNotFoundException;
 import com.example.employeeSalary.service.EmployeeAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,12 @@ public class EmployeeAccountController {
 
     @GetMapping("/NetSalary/{empId}")
     public ResponseEntity<EmployeeAccount> calculateNetSalary(@PathVariable int empId) {
-        EmployeeAccount employee = service.calculateAndUpdateNetSalary(empId);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+        try {
+            EmployeeAccount employee = service.calculateAndUpdateNetSalary(empId);
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        } catch (EmployeeNotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/all")
@@ -38,5 +43,15 @@ public class EmployeeAccountController {
     public ResponseEntity<List<EmployeeAccount>> calculateAndGetAllNetSalaries() {
         List<EmployeeAccount> employees = service.calculateAndUpdateNetSalariesForAll();
         return new ResponseEntity<>(employees, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{empId}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable int empId) {
+        try {
+            service.deleteEmployeeById(empId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (EmployeeNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
