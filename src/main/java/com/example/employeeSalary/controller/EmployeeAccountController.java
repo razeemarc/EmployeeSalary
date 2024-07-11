@@ -33,4 +33,10 @@ public class EmployeeAccountController {
         EmployeeAccount createdEmployee = service.saveEmployee(employee);
         return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
+
+    @GetMapping("/NetSalaries")
+    public ResponseEntity<List<EmployeeAccount>> calculateAndGetAllNetSalaries() {
+        List<EmployeeAccount> employees = service.calculateAndUpdateNetSalariesForAll();
+        return new ResponseEntity<>(employees, HttpStatus.OK);
+    }
 }

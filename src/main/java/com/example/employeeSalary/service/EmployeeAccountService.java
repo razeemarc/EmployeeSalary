@@ -28,4 +28,14 @@ public class EmployeeAccountService {
     public List<EmployeeAccount> getAllEmployees() {
         return repository.findAll();
     }
+
+    public List<EmployeeAccount> calculateAndUpdateNetSalariesForAll() {
+        List<EmployeeAccount> employees = repository.findAll();
+        for (EmployeeAccount employee : employees) {
+            int netSalary = employee.getBaseSalary() - (employee.getLeaveDays() * 1000);
+            employee.setNetSalary(netSalary);
+            repository.save(employee);
+        }
+        return employees;
+    }
 }
